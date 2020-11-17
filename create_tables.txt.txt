@@ -1,0 +1,98 @@
+CREATE Table stadium (
+    Stadium_ID NUMBER,
+    Stadium_Name VARCHAR2(25) UNIQUE,
+    Capacity NUMBER,
+    Location VARCHAR2(25),
+    PRIMARY KEY (Stadium_ID)
+);
+
+CREATE Table team (
+    Team_ID NUMBER,
+    Stadium_ID NUMBER,
+    Team_Name VARCHAR2(25) UNIQUE,
+    Home_City VARCHAR2(25),
+    PRIMARY KEY (Team_ID),
+    FOREIGN KEY (Stadium_ID) REFERENCES stadium(Stadium_ID)
+);
+
+CREATE Table player (
+    Member_ID NUMBER,
+    Team_ID NUMBER,
+    First_Name VARCHAR2(25) NOT NULL,
+    Last_Name VARCHAR2(25) NOT NULL,
+    Birth_Date DATE,
+    Phone_Number NUMBER,
+    Position VARCHAR2(25) NOT NULL,
+    Role VARCHAR2(25) NOT NULL,
+    Total_Goals NUMBER DEFAULT 0,
+    Total_Assists NUMBER DEFAULT 0,
+    PRIMARY KEY (Member_ID),
+    FOREIGN KEY (Team_ID) REFERENCES team(Team_ID)
+);
+
+CREATE TABLE coach (
+    Member_ID NUMBER,
+    Team_ID NUMBER,
+    First_Name VARCHAR2(25) NOT NULL,
+    Last_Name VARCHAR2(25) NOT NULL,
+    Birth_Date DATE,
+    Phone_Number NUMBER,
+    Gender VARCHAR(6) NOT NULL,
+    PRIMARY KEY (Member_ID),
+    FOREIGN KEY (Team_ID) REFERENCES team(Team_ID)
+);
+CREATE TABLE game (
+    Game_ID NUMBER,
+    Game_Date DATE,
+    Game_Result VARCHAR(25) NOT NULL,
+    Game_Location VARCHAR(25),
+    PRIMARY KEY (Game_ID)
+);
+
+CREATE TABLE goal (
+    Goal_ID NUMBER,
+    Game_ID NUMBER,
+    Time_Scored NUMBER NOT NULL,
+    Player_Scored NUMBER NOT NULL,
+    Player_Assist NUMBER,
+    Team_Scored VARCHAR2(25) NOT NULL,
+    PRIMARY KEY (Goal_ID),
+    FOREIGN KEY (Game_ID) REFERENCES game(Game_ID)
+);
+
+
+CREATE TABLE plays(
+    Game_ID NUMBER,
+    Team_ID NUMBER,
+    Opponent_ID NUMBER,
+    CONSTRAINT plays_pk
+        PRIMARY KEY(Game_ID, Team_ID, Opponent_ID),
+    CONSTRAINT plays_fk1
+        FOREIGN KEY (Game_ID)   
+            REFERENCES game(Game_ID) ON DELETE CASCADE,
+    CONSTRAINT plays_fk2
+        FOREIGN KEY (Team_ID)   
+            REFERENCES team(Team_ID) ON DELETE CASCADE,
+    CONSTRAINT plays_fk3
+        FOREIGN KEY (Opponent_ID)   
+            REFERENCES team(Team_ID) ON DELETE CASCADE
+);
+CREATE TABLE referee(
+    Referee_ID NUMBER,
+    First_Name VARCHAR2(25) NOT NULL,
+    Last_Name VARCHAR2(25) NOT NULL,
+    PRIMARY KEY (Referee_ID)
+);
+
+CREATE TABLE referees(
+    Referee_ID NUMBER,
+    Game_ID NUMBER,
+    CONSTRAINT referees_pk
+        PRIMARY KEY (Referee_ID, Game_ID),
+    CONSTRAINT referees_fk1
+        FOREIGN KEY (Referee_ID)   
+            REFERENCES referee(Referee_ID) ON DELETE CASCADE,
+    CONSTRAINT referees_fk2
+        FOREIGN KEY (Game_ID)   
+            REFERENCES game(Game_ID) ON DELETE CASCADE
+);

@@ -1,0 +1,55 @@
+SELECT Game_Location, COUNT(Game_ID) AS Number_Games
+FROM game
+GROUP BY Game_Location
+HAVING COUNT(Game_ID) > 1
+	MINUS
+	SELECT Game_Location, COUNT(Game_ID) AS Number_Games
+	FROM game
+	GROUP BY Game_Location
+	HAVING COUNT(Game_ID) = 3;
+
+
+SELECT player.Member_ID, AVG(goal.Time_Scored)
+FROM player, goal
+WHERE player.Member_ID = goal.Player_Scored
+GROUP BY player.Member_ID
+	MINUS
+	SELECT player.Member_ID, AVG(goal.Time_Scored)
+	FROM player, goal
+	WHERE player.Member_ID = goal.Player_Scored
+	GROUP BY player.Member_ID
+	HAVING AVG(goal.Time_Scored) < 20;
+
+
+SELECT player.Member_ID, player.First_Name, player.Last_Name, player.Total_Goals AS Total_Goals
+FROM player
+GROUP BY player.Member_ID, player.First_Name, player.Last_Name, player.Total_Goals
+	MINUS
+	SELECT player.Member_ID, player.First_Name, player.Last_Name, player.Total_Goals AS Total_Goals
+	FROM player
+WHERE player.Member_ID = 1 OR player.Member_ID = 2
+	GROUP BY player.Member_ID, player.First_Name, player.Last_Name, player.Total_Goals;
+
+
+SELECT player.Team_ID, team.Team_Name, COUNT(team.Team_ID) AS number_of_players
+FROM player, team
+WHERE player.Team_ID = team.Team_ID
+GROUP BY player.Team_ID, team.Team_Name
+HAVING player.Team_ID = 1
+	UNION 
+	SELECT player.Team_ID, team.Team_Name, COUNT(team.Team_ID) AS number_of_players
+	FROM player, team
+	WHERE player.Team_ID = team.Team_ID
+	GROUP BY player.Team_ID, team.Team_Name
+	HAVING player.Team_ID = 3;
+
+
+SELECT game.Game_Date, COUNT(game.Game_Date) AS number_of_games_played
+FROM game
+WHERE game.Game_Date > to_date('01/01/2020','dd/mm/yyyy')
+GROUP BY game.Game_Date
+	MINUS
+	SELECT game.Game_Date, COUNT(game.Game_Date) AS number_of_games_played
+	FROM game
+	WHERE game.Game_Date > to_date('01/07/2020','dd/mm/yyyy')
+	GROUP BY game.Game_Date;

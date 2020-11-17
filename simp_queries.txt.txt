@@ -1,0 +1,35 @@
+SELECT Member_ID, First_Name, Last_Name, Position, Birth_Date 
+FROM player 
+WHERE Role='Captain' AND Position='Defender'
+ORDER BY to_date(Birth_Date) DESC;
+
+
+SELECT Team_Name, Home_City 
+FROM team 
+ORDER BY Home_City ASC;
+
+
+SELECT Stadium_ID, Capacity
+FROM stadium
+WHERE Capacity >= 30000
+ORDER BY Stadium_ID ASC;
+
+
+SELECT * FROM coach WHERE Gender = 'Male';
+
+
+SELECT Game_ID, Game_Date FROM game WHERE Game_Date > to_date('30/04/2020','dd/mm/yyyy');
+
+
+SELECT Game_ID, Opponent_ID FROM plays WHERE Team_ID = 4;
+
+ 
+SELECT Goal_ID,Goal_ID,Time_Scored,Player_Scored,Player_Assist,Team_Scored FROM goal
+WHERE Player_Assist IS NOT NULL;
+
+
+SELECT Referee_ID,First_Name,Last_Name FROM referee;
+
+
+SELECT Referee_ID, Game_ID FROM referees
+WHERE Referee_ID = 2;
