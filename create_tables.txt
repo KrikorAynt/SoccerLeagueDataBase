@@ -95,4 +95,4 @@ CREATE TABLE referees(
     CONSTRAINT referees_fk2
         FOREIGN KEY (Game_ID)   
             REFERENCES game(Game_ID) ON DELETE CASCADE
-);
+)

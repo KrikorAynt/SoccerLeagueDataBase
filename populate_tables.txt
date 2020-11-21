@@ -158,4 +158,4 @@ INSERT INTO referees(Referee_ID,Game_ID)
 VALUES (3,9);
 INSERT INTO referees(Referee_ID,Game_ID)
 VALUES (4,10);
-COMMIT;
+COMMIT

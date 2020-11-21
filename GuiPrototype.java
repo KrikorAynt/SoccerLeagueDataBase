@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class GuiPrototype {
     //these are instance variables so they are accessible by the actionlisteners
     private JFrame frame;
@@ -19,16 +20,18 @@ public class GuiPrototype {
     private JPanel stadiumCard ;
     private JPanel gameCard;
     private JPanel goalCard ;
+    JdbcHelper jh = new JdbcHelper();
     
-    //reads a whole file and return the contents as a string
-    private static String getFileContents(String file) {
+    //reads a whole file and return the contents as a string array
+    private static String[] getFileContents(String file) {
         String content = "";
         try {
             content = new String(Files.readAllBytes(Paths.get(file)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return content;
+
+        return content.split(";");
     }
     
     private JButton createButton(String text, String actioncmd, ActionListener al) {
@@ -82,7 +85,7 @@ public class GuiPrototype {
 
         return outPanel;
     }
-    private JPanel buildInputCard(ArrayList x){
+    private JPanel buildInputCard(ArrayList x, String table){
         JPanel inCard = new JPanel();
         JPanel top = new JPanel(new GridLayout(0,2));
         for(Object z: x){
@@ -90,30 +93,30 @@ public class GuiPrototype {
            top.add(createTextField());
         }
         JButton submitBtn = new JButton("Submit");
-        submitBtn.addActionListener(new SubmitListener(top));
+        submitBtn.addActionListener(new SubmitListener(top, table));
         top.add(submitBtn, BorderLayout.PAGE_END);
         inCard.add(top);
         
         return inCard;
     }
     private void buildInputPanel() {
-        ArrayList player = new ArrayList(Arrays.asList("First Name", "Last Name", "Jersey Number"));
-        ArrayList coach = new ArrayList(Arrays.asList("First Name", "Last Name", "Team Name"));
-        ArrayList referee = new ArrayList(Arrays.asList("First Name", "Last Name"));
-        ArrayList team = new ArrayList(Arrays.asList("Team Name", "Jersey Color"));
-        ArrayList stadium = new ArrayList(Arrays.asList("Stadium Name", "Team Name"));
-        ArrayList game = new ArrayList(Arrays.asList("Team 1", "Team 2", "Referee"));
-        ArrayList goal = new ArrayList(Arrays.asList("Player ID", "Time Scored", "GameID"));
-        
+        ArrayList player = jh.getColumnNames("player");
+        ArrayList coach = jh.getColumnNames("coach");
+        ArrayList referee =  jh.getColumnNames("referee");
+        ArrayList team =  jh.getColumnNames("team");
+        ArrayList stadium = jh.getColumnNames("stadium");
+        ArrayList game = jh.getColumnNames("game");
+        ArrayList goal = jh.getColumnNames("goal");
+
         inputPanel= new JPanel(new CardLayout());
         
-         playerCard = buildInputCard(player);
-         coachCard = buildInputCard(coach);
-         refereeCard = buildInputCard(referee);
-         teamCard = buildInputCard(team);
-         stadiumCard = buildInputCard(stadium);
-         gameCard = buildInputCard(game);
-         goalCard = buildInputCard(goal);
+        playerCard = buildInputCard(player, "player");
+        coachCard = buildInputCard(coach, "coach");
+        refereeCard = buildInputCard(referee, "referee");
+        teamCard = buildInputCard(team, "team");
+        stadiumCard = buildInputCard(stadium, "stadium");
+        gameCard = buildInputCard(game, "game");
+        goalCard = buildInputCard(goal, "goal");
         
         inputPanel.add(playerCard,"playerCard");
         inputPanel.add(coachCard,"coachCard");
@@ -122,9 +125,6 @@ public class GuiPrototype {
         inputPanel.add(stadiumCard,"stadiumCard");
         inputPanel.add(gameCard,"gameCard");
         inputPanel.add(goalCard,"goalCard");
-        
-        
-        
     }
 
     public GuiPrototype() {
@@ -147,18 +147,38 @@ public class GuiPrototype {
 
     private class SubmitListener implements ActionListener {
         private JPanel card;
+        private String table;
 
-        public SubmitListener(JPanel card) {
+        public SubmitListener(JPanel card, String table) {
             this.card = card;
+            this.table = table;
         }
-        
+       
+        //INSERT INTO table (fields) VALUES (data)
         public void actionPerformed(ActionEvent e) {
-            
-            for (Component component : card.getComponents()) {
-            if (component instanceof JTextField) {
-                System.out.println(((JTextField) component).getText());
+            StringBuilder sb = new StringBuilder();
+            sb.append("INSERT INTO " + table + " (");
+            ArrayList fields = GuiPrototype.this.jh.getColumnNames(table);
+            for (int i = 0; i < fields.size(); i++) {
+                sb.append(fields.get(i).toString());
+                if (i < fields.size() - 1) {
+                    sb.append(",");
+                }
             }
-        }
+            sb.append(") VALUES (");
+            //for (Component component : card.getComponents()) {
+            Component[] components = card.getComponents();
+            for (int i = 0; i < components.length; i++) {
+                if (components[i] instanceof JTextField) {
+                    sb.append(((JTextField) components[i]).getText());
+                    if (i < components.length - 2) {
+                        sb.append(",");
+                    }
+                }
+            }
+            sb.append(")");
+            System.out.println(sb.toString());
+            GuiPrototype.this.jh.query(sb.toString());
         }
     }
     
@@ -173,19 +193,20 @@ public class GuiPrototype {
     private class ExitListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             GuiPrototype.this.frame.dispose();
-            //TODO also disconnect from db
+            jh.closeConnection();
         }
     }
 
     private class QuerySender implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //read queries from file specified by the button's actioncommand
-            String queries = GuiPrototype.getFileContents(e.getActionCommand());
-            /* TODO: 
-             * send the queries string to the db
-             * output the result into the JTextArea output
-             */
-            System.out.println(queries); //just for testing
+            String[] queries = GuiPrototype.getFileContents(e.getActionCommand());
+            output.setText("");
+            for (String query : queries) {
+                String result = jh.query(query);
+                output.append(result + "\n");
+            }
+            output.append("Success.");
         }
     }
 
