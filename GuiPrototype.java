@@ -129,7 +129,12 @@ public class GuiPrototype {
 
     public GuiPrototype() {
         frame = new JFrame("Soccer League DBMS");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent event) {
+                exitProgram();
+            }
+        });
         frame.setSize(600, 400);
         
         JPanel buttonPanel = buildButtonPanel();
@@ -182,6 +187,12 @@ public class GuiPrototype {
         }
     }
     
+    private void exitProgram() {
+        frame.dispose();
+        jh.closeConnection();
+        System.exit(0);
+    }
+
     //may change depending on how the input panel is implemented
     private class TableSwitcher implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -192,8 +203,7 @@ public class GuiPrototype {
 
     private class ExitListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            GuiPrototype.this.frame.dispose();
-            jh.closeConnection();
+            GuiPrototype.this.exitProgram();
         }
     }
 
