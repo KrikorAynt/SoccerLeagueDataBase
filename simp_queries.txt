@@ -21,7 +21,7 @@ SELECT * FROM coach WHERE Gender = 'Male';
 SELECT Game_ID, Game_Date FROM game WHERE Game_Date > to_date('30/04/2020','dd/mm/yyyy');
 
 
-SELECT Game_ID, away_team_ID FROM game WHERE home_team_ID = 4;
+SELECT Game_ID, Away_Team_ID FROM game WHERE Home_Team_ID = 4;
 
  
 SELECT Goal_ID,Goal_ID,Time_Scored,Player_Scored,Player_Assist,Team_Scored FROM goal
@@ -31,4 +31,4 @@ WHERE Player_Assist IS NOT NULL;
 SELECT Referee_ID,First_Name,Last_Name FROM referee;
 
 SELECT Referee_ID, Game_ID FROM game
-WHERE Referee_ID = 2;
+WHERE Referee_ID = 2

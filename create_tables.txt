@@ -41,6 +41,12 @@ CREATE TABLE coach (
     PRIMARY KEY (Member_ID),
     FOREIGN KEY (Team_ID) REFERENCES team(Team_ID)
 );
+CREATE TABLE referee(
+    Referee_ID NUMBER,
+    First_Name VARCHAR2(25) NOT NULL,
+    Last_Name VARCHAR2(25) NOT NULL,
+    PRIMARY KEY (Referee_ID)
+);
 CREATE TABLE game (
     Game_ID NUMBER,
     Game_Date DATE,
@@ -49,7 +55,10 @@ CREATE TABLE game (
     Referee_ID NUMBER,
     Home_Team_ID NUMBER,
     Away_Team_ID NUMBER,
-    PRIMARY KEY (Game_ID)
+    PRIMARY KEY (Game_ID),
+    FOREIGN KEY (Referee_ID) REFERENCES referee(Referee_ID),
+    FOREIGN KEY (Home_Team_ID) REFERENCES team(Team_ID), 
+    FOREIGN KEY (Away_Team_ID) REFERENCES team(Team_ID) 
 );
 
 CREATE TABLE goal (
@@ -61,14 +70,8 @@ CREATE TABLE goal (
     Team_Scored VARCHAR2(25) NOT NULL,
     PRIMARY KEY (Goal_ID),
     FOREIGN KEY (Game_ID) REFERENCES game(Game_ID)
-);
+)
 
 
-CREATE TABLE referee(
-    Referee_ID NUMBER,
-    First_Name VARCHAR2(25) NOT NULL,
-    Last_Name VARCHAR2(25) NOT NULL,
-    PRIMARY KEY (Referee_ID)
-);
 
 

@@ -19,7 +19,7 @@ public class JdbcHelper {
     public JdbcHelper() {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            String dbURL1 = "jdbc:oracle:thin:username/password@oracle.scs.ryerson.ca:1521:orcl";  // that is school Oracle database and you can only use it in the labs								
+            String dbURL1 = "jdbc:oracle:thin:user/pass@oracle.scs.ryerson.ca:1521:orcl";  // that is school Oracle database and you can only use it in the labs								
 			conn1 = DriverManager.getConnection(dbURL1);
             if (conn1 != null) {
                 System.out.println("Connected with connection #1");
