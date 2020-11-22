@@ -1,0 +1,3 @@
+Main-Class: GuiPrototype
+Class-Path: ojdbc6.jar
+

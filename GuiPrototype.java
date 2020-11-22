@@ -20,6 +20,8 @@ public class GuiPrototype {
     private JPanel stadiumCard ;
     private JPanel gameCard;
     private JPanel goalCard ;
+    private JPanel refereesCard ;
+    private JPanel playsCard ;
     JdbcHelper jh = new JdbcHelper();
     
     //reads a whole file and return the contents as a string array
@@ -64,6 +66,8 @@ public class GuiPrototype {
         top.add(createButton("Create Stadium", "stadiumCard", ts));
         top.add(createButton("Create Game", "gameCard", ts));
         top.add(createButton("Create Goal", "goalCard", ts));
+        top.add(createButton("Create Referees", "refereesCard", ts));
+        top.add(createButton("Create Plays", "playsCard", ts));
 
         buttonPanel.add(top, BorderLayout.PAGE_START);
         JButton exitBtn = new JButton("Exit");
@@ -89,8 +93,8 @@ public class GuiPrototype {
         JPanel inCard = new JPanel();
         JPanel top = new JPanel(new GridLayout(0,2));
         for(Object z: x){
-           top.add(new JLabel(z.toString()));
-           top.add(createTextField());
+            top.add(new JLabel(z.toString()));
+            top.add(createTextField());
         }
         JButton submitBtn = new JButton("Submit");
         submitBtn.addActionListener(new SubmitListener(top, table));
@@ -107,6 +111,8 @@ public class GuiPrototype {
         ArrayList stadium = jh.getColumnNames("stadium");
         ArrayList game = jh.getColumnNames("game");
         ArrayList goal = jh.getColumnNames("goal");
+        ArrayList referees = jh.getColumnNames("referees");
+        ArrayList plays = jh.getColumnNames("plays");
 
         inputPanel= new JPanel(new CardLayout());
         
@@ -117,6 +123,8 @@ public class GuiPrototype {
         stadiumCard = buildInputCard(stadium, "stadium");
         gameCard = buildInputCard(game, "game");
         goalCard = buildInputCard(goal, "goal");
+        refereesCard = buildInputCard(referees, "referees");
+        playsCard = buildInputCard(plays, "plays");
         
         inputPanel.add(playerCard,"playerCard");
         inputPanel.add(coachCard,"coachCard");
@@ -125,6 +133,8 @@ public class GuiPrototype {
         inputPanel.add(stadiumCard,"stadiumCard");
         inputPanel.add(gameCard,"gameCard");
         inputPanel.add(goalCard,"goalCard");
+        inputPanel.add(refereesCard,"refereesCard");
+        inputPanel.add(playsCard,"playsCard");
     }
 
     public GuiPrototype() {
@@ -175,7 +185,12 @@ public class GuiPrototype {
             Component[] components = card.getComponents();
             for (int i = 0; i < components.length; i++) {
                 if (components[i] instanceof JTextField) {
-                    sb.append(((JTextField) components[i]).getText());
+                    if (((JLabel) components[i-1]).getText().matches(".*_DATE")) {
+                        String date = ((JTextField) components[i]).getText();
+                        sb.append("to_date('" + date + "','dd/mm/yyyy')");
+                    } else {
+                        sb.append(((JTextField) components[i]).getText());
+                    }
                     if (i < components.length - 2) {
                         sb.append(",");
                     }
