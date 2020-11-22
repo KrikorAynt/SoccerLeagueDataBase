@@ -46,6 +46,9 @@ CREATE TABLE game (
     Game_Date DATE,
     Game_Result VARCHAR(25) NOT NULL,
     Game_Location VARCHAR(25),
+    Referee_ID NUMBER,
+    Home_Team_ID NUMBER,
+    Away_Team_ID NUMBER,
     PRIMARY KEY (Game_ID)
 );
 
@@ -61,22 +64,6 @@ CREATE TABLE goal (
 );
 
 
-CREATE TABLE plays(
-    Game_ID NUMBER,
-    Team_ID NUMBER,
-    Opponent_ID NUMBER,
-    CONSTRAINT plays_pk
-        PRIMARY KEY(Game_ID, Team_ID, Opponent_ID),
-    CONSTRAINT plays_fk1
-        FOREIGN KEY (Game_ID)   
-            REFERENCES game(Game_ID) ON DELETE CASCADE,
-    CONSTRAINT plays_fk2
-        FOREIGN KEY (Team_ID)   
-            REFERENCES team(Team_ID) ON DELETE CASCADE,
-    CONSTRAINT plays_fk3
-        FOREIGN KEY (Opponent_ID)   
-            REFERENCES team(Team_ID) ON DELETE CASCADE
-);
 CREATE TABLE referee(
     Referee_ID NUMBER,
     First_Name VARCHAR2(25) NOT NULL,
@@ -84,15 +71,4 @@ CREATE TABLE referee(
     PRIMARY KEY (Referee_ID)
 );
 
-CREATE TABLE referees(
-    Referee_ID NUMBER,
-    Game_ID NUMBER,
-    CONSTRAINT referees_pk
-        PRIMARY KEY (Referee_ID, Game_ID),
-    CONSTRAINT referees_fk1
-        FOREIGN KEY (Referee_ID)   
-            REFERENCES referee(Referee_ID) ON DELETE CASCADE,
-    CONSTRAINT referees_fk2
-        FOREIGN KEY (Game_ID)   
-            REFERENCES game(Game_ID) ON DELETE CASCADE
-)
+
