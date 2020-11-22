@@ -66,26 +66,26 @@ VALUES (18, 1, 'Kevin', 'Cook', to_date('21/06/1992','dd/mm/yyyy'), 2157930347, 
 INSERT INTO coach (Member_ID, TEAM_ID, First_Name, Last_Name, Birth_Date, Phone_Number, Gender)
 VALUES (19, 4, 'Charlotte', 'Popp', to_date('07/11/1974','dd/mm/yyyy'), 8012374663, 'Female');
 
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (1, to_date('14/03/2020','dd/mm/yyyy'), '0 - 1', 'Toronto');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (2, to_date('29/03/2020','dd/mm/yyyy'), '0 - 0', 'Montreal');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (3, to_date('09/04/2020','dd/mm/yyyy'), '1 - 0', 'Fulham');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (4, to_date('12/04/2020','dd/mm/yyyy'), '2 - 1', 'Montreal');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (5, to_date('17/05/2020','dd/mm/yyyy'), '0 - 1', 'Manchester');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (6, to_date('24/05/2020','dd/mm/yyyy'), '0 - 1', 'Toronto');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (7, to_date('01/06/2020','dd/mm/yyyy'), '2 - 0', 'Manchester');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (8, to_date('10/06/2020','dd/mm/yyyy'), '0 - 1', 'Manchester');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (9, to_date('20/06/2020','dd/mm/yyyy'), '0 - 0', 'Chelsea');
-INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location)
-VALUES (10, to_date('16/07/2020','dd/mm/yyyy'), '0 - 0', 'Chelsea');
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (1, to_date('14/03/2020','dd/mm/yyyy'), '0 - 1', 'Toronto',1,1,2);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (2, to_date('29/03/2020','dd/mm/yyyy'), '0 - 0', 'Montreal',2, 3, 4);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (3, to_date('09/04/2020','dd/mm/yyyy'), '1 - 0', 'Fulham',3, 4, 2);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (4, to_date('12/04/2020','dd/mm/yyyy'), '2 - 1', 'Montreal',4, 3, 1);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (5, to_date('17/05/2020','dd/mm/yyyy'), '0 - 1', 'Manchester',3, 2, 3);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (6, to_date('24/05/2020','dd/mm/yyyy'), '0 - 1', 'Toronto',2, 1, 4);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (7, to_date('01/06/2020','dd/mm/yyyy'), '2 - 0', 'Manchester',1, 2, 3);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (8, to_date('10/06/2020','dd/mm/yyyy'), '0 - 1', 'Manchester',2, 2, 1);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (9, to_date('20/06/2020','dd/mm/yyyy'), '0 - 0', 'Chelsea',3, 4, 3);
+INSERT INTO game (Game_ID, Game_Date, Game_Result, Game_Location,referee_id,home_team_id,away_team_id)
+VALUES (10, to_date('16/07/2020','dd/mm/yyyy'), '0 - 0', 'Chelsea',4, 4, 2);
 
 INSERT INTO goal(Goal_ID, Game_ID, Time_Scored, Player_Scored, Player_Assist, Team_Scored)
 VALUES (1, 1, 45.59, 3, 4, 2);
@@ -108,26 +108,6 @@ VALUES (7, 7, 47.29, 21, NULL, 2);
 INSERT INTO goal(Goal_ID,Game_ID,Time_Scored,Player_Scored,Player_Assist,Team_Scored)
 VALUES (6, 8, 85.51, 2, 1, 1);
 
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (1, 1, 2);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (2, 3, 4);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (3, 4, 2);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (4, 3, 1);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (5, 2, 3);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (6, 1, 4);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (7, 2, 3);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (8, 2, 1);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (9, 4, 3);
-INSERT INTO plays (Game_ID, Team_ID, Opponent_ID)
-VALUES (10, 4, 2);
 
 INSERT INTO referee(Referee_ID,First_Name,Last_Name)
 VALUES (1, 'Jeff', 'Bezos');
@@ -138,24 +118,4 @@ VALUES (3, 'Bill', 'Gates');
 INSERT INTO referee(Referee_ID,First_Name,Last_Name)
 VALUES (4, 'Sundar', 'Pichai');
 
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (1,1);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (2,2);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (3,3);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (4,4);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (3,5);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (2,6);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (1,7);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (2,8);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (3,9);
-INSERT INTO referees(Referee_ID,Game_ID)
-VALUES (4,10);
 COMMIT
