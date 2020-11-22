@@ -1,15 +1,11 @@
 # SoccerLeagueDataBase
 Java UI for working with SQL database for Soccer League
 
----
-
-## To Run:
-
-```
-java -jar SoccerLeagueDBMS.jar
-```
+----
 
 ## To Compile:
+
+First, edit the 'dbURL1' string in JdbcHelper.java to use your oracle db login information. Then:
 
 **On UNIX environments:**
 ```
@@ -24,4 +20,12 @@ Then, to create jar file:
 ```
 jar -cvfm SoccerLeagueDBMS.jar Manifest.txt *.class
 ```
+
+## To Run:
+
+Make sure ojdbc6.jar and all .txt files with queries are in the directory with the main jar file (SoccerLeagueDBMS.jar). Then:
+```
+java -jar SoccerLeagueDBMS.jar
+```
+
 
