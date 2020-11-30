@@ -2,6 +2,9 @@
 Java UI for working with SQL database for Soccer League
 
 ----
+## For the Application to Run you need to connect to the Ryerson VPN:
+
+You can use VPN from the following link: https://drive.google.com/drive/folders/1WmDneVZyp2KEyihlMhZqqj7Y2XSEGscA?usp=sharing
 
 ## To Compile:
 
@@ -27,5 +30,3 @@ Make sure ojdbc6.jar and all .txt files with queries are in the directory with t
 ```
 java -jar SoccerLeagueDBMS.jar
 ```
-
-
