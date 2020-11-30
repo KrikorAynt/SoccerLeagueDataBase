@@ -1,5 +1,4 @@
 # Demo
-https://youtu.be/W-AOJoLSy1c
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/W-AOJoLSy1c/0.jpg)](https://www.youtube.com/watch?v=W-AOJoLSy1c)
 
 # SoccerLeagueDataBase
